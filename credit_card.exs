@@ -18,7 +18,7 @@ defmodule CreditCard do
   end
 
   def months_to_payoff(balance, apr, payment), do: months_to_payoff(balance, apr, payment, 0)
-  def months_to_payoff(balance, apr, payment, months) when balance > 0 do
+  def months_to_payoff(balance, apr, payment, months) when balance > 0 and payment < balance do
     balance
       |> monthly_percentage(apr, payment)
       |> print_result(months)
@@ -37,7 +37,7 @@ defmodule CreditCard do
       |> print_result(months)
       |> months_to_payoff_w_bump(apr, payment, %{:at_month => at_month, :amount => amount}, months + 1)
   end
-  def months_to_payoff_w_bump(balance, apr, payment, months) when balance > 0,
+  def months_to_payoff_w_bump(balance, apr, payment, months) when balance > 0 and payment < balance,
   do: months_to_payoff(balance, apr, payment, months)
 
   defp daily_percentage_rate(apr),
