@@ -27,6 +27,8 @@ defmodule CreditCard do
   def months_to_payoff(_,_,_,months),
   do: IO.puts "#{months} months to payoff"
 
+  def months_to_payoff_w_bump(balance, apr, payment, %{:at_month => at_month, :amount => amount}),
+  do: months_to_payoff_w_bump(balance, apr, payment, %{:at_month => at_month, :amount => amount}, 0)
   def months_to_payoff_w_bump(balance, apr, payment, %{:at_month => at_month, :amount => amount}, months) when at_month == months,
   do: months_to_payoff_w_bump(balance, apr, payment + amount, months)
   def months_to_payoff_w_bump(balance, apr, payment, %{:at_month => at_month, :amount => amount}, months) do
